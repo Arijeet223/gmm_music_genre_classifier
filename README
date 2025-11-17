@@ -20,7 +20,31 @@ using MFCC audio features from the GTZAN dataset.
 Python, Librosa, Scikit-learn, NumPy, Matplotlib
 
 ## 📎 Theory
-Short explanation of why GMMs work well for audio modeling
+GMMs model a data distribution as a mixture of multiple Gaussian densities, which makes them extremely effective for audio because real-world audio features (MFCCs, spectral coefficients) are highly variable and multi-modal.
 
-## 🏁 How to Run
-<commands>
+Different sounds (phonemes, instruments, timbres) produce clusters of feature vectors in different regions of the feature space.
+A single Gaussian cannot capture this complexity, but a mixture of Gaussians can approximate any continuous density. This lets GMMs:
+
+✅ 1. Capture Multi-Modal Structure
+
+Audio frames from different sound sources or phonemes form different “clouds” in feature space.
+GMMs naturally model these using multiple components, each specializing in one pattern.
+
+✅ 2. Handle Frame-Level Variability
+
+Audio features change every 10–20 ms.
+GMMs assume each frame is generated from one latent Gaussian component → perfect for frame-based modeling like speech and music.
+
+✅ 3. Smooth, Continuous Probability Estimation
+
+Gaussian functions give smooth boundaries and soft assignments, which works better than hard clustering (K-means) for noisy, overlapping audio features.
+
+✅ 4. Mathematical Convenience
+
+GMMs integrate perfectly with algorithms used in audio:
+
+EM algorithm → easy parameter learning
+
+HMM + GMM → classical backbone of speech recognition
+
+Efficient likelihood computation for classification
